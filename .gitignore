@@ -1,0 +1,27 @@
+# dbt artifacts
+target/
+dbt_packages/
+dbt_modules/         # older dbt versions used this instead of dbt_packages
+logs/
+
+# dbt local config with credentials
+profiles.yml
+
+# Environment variables
+.env
+.env.*
+
+# Python (if using dbt with Python/venv)
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+env/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+
+# dbt Cloud / editor artifacts
+.user.yml
