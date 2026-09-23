@@ -180,8 +180,10 @@ git commit -m "Add raw schema DDL for training populate scripts"
 -- Deterministic (no random()) — re-running always yields identical data.
 -- Must be run after 01_create_schema_and_tables.sql.
 
--- raw.customers (~120 rows). Deliberately inconsistent name/country casing
--- and spacing, cycling deterministically by customer_id.
+-- raw.customers (~120 rows). Deliberately inconsistent name casing/spacing
+-- and country casing (casing-only: stg_customers.sql only applies upper()
+-- to country, matching the slide deck's exact cleaning logic, which does
+-- not trim() country — so its dirtiness must not include whitespace).
 INSERT INTO raw.customers (customer_id, name, country)
 SELECT
     100 + gs AS customer_id,
@@ -194,7 +196,7 @@ SELECT
     CASE gs % 3
         WHEN 0 THEN 'nl'
         WHEN 1 THEN 'NL'
-        ELSE ' Nl'
+        ELSE 'Nl'
     END AS country
 FROM generate_series(1, 120) AS gs;
 
