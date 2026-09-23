@@ -2,15 +2,15 @@ version: 2
 
 models:
   - name: curated_customer_orders
-    description: One row per customer with order count and total revenue. Report-ready.
+    description: "Omzet en aantal orders per klant, klaar voor rapportage."
     columns:
       - name: customer_id
-        description: Primary key of the customer.
+        description: "Unieke identifier van de klant."
         tests:
           - unique
           - not_null
       - name: totale_omzet
-        description: Total revenue (sum of order_amount) across all of this customer's orders.
+        description: "Som van order_amount over alle orders van de klant."
 
   - name: curated_product_sales
     description: "Verdieping: one row per product with units sold and total revenue."

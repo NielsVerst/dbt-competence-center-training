@@ -9,17 +9,17 @@ models:
         tests:
           - unique
           - not_null
+      - name: order_status
+        description: Order status, lowercased (e.g. 'shipped', 'open', 'cancelled').
+        tests:
+          - accepted_values:
+              values: ['open', 'shipped', 'cancelled']
       - name: customer_id
         description: Foreign key to stg_customers.
         tests:
           - relationships:
               to: ref('stg_customers')
               field: customer_id
-      - name: order_status
-        description: Order status, lowercased (e.g. 'shipped', 'open', 'cancelled').
-        tests:
-          - accepted_values:
-              values: ['open', 'shipped', 'cancelled']
 
   - name: stg_customers
     description: "One row per customer, cleaned: name trimmed, country uppercased into country_code."

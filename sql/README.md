@@ -12,11 +12,12 @@ psql -h localhost -U <your_user> -d <your_db> -f 01_create_schema_and_tables.sql
 psql -h localhost -U <your_user> -d <your_db> -f 02_populate_raw_data.sql
 ```
 
-Both scripts are idempotent — `01_create_schema_and_tables.sql` drops and
-recreates the `raw` schema, and `02_populate_raw_data.sql` inserts a fixed,
-deterministic dataset (no randomness), so re-running them always produces
-identical data. If you need to reset your environment mid-training, just
-run both scripts again in order.
+Re-running the two scripts **in order** always produces identical data —
+`01_create_schema_and_tables.sql` drops and recreates the `raw` schema, so
+`02_populate_raw_data.sql` always starts from empty. Don't run
+`02_populate_raw_data.sql` on its own a second time; it will fail on
+duplicate primary keys. If you need to reset your environment mid-training,
+run both scripts again, in order.
 
 ## What gets created
 

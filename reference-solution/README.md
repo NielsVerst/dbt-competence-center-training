@@ -21,8 +21,10 @@ stuck.
 ## Running it
 
 1. Populate your `raw` schema first — see `../sql/README.md`.
-2. Copy `profiles.yml.example` to `~/.dbt/profiles.yml` (or point
-   `DBT_PROFILES_DIR` at a folder containing your own copy) and fill in
-   your Postgres credentials.
+2. Add the profile block from `profiles.yml.example` to your existing
+   `~/.dbt/profiles.yml` (don't overwrite the whole file — it likely
+   already has your own hands-on project's profile in it), or point
+   `DBT_PROFILES_DIR` at a separate folder containing just this profile,
+   and fill in your Postgres credentials.
 3. From this folder: `dbt debug`, then `dbt build`, then `dbt docs generate`
    and `dbt docs serve` to browse the lineage graph.
