@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: curated_customer_orders
+    description: One row per customer with order count and total revenue. Report-ready.
+    columns:
+      - name: customer_id
+        description: Primary key of the customer.
+        tests:
+          - unique
+          - not_null
+      - name: totale_omzet
+        description: Total revenue (sum of order_amount) across all of this customer's orders.
+
+  - name: curated_product_sales
+    description: "Verdieping: one row per product with units sold and total revenue."
+    columns:
+      - name: product_id
+        description: Primary key of the product.
+        tests:
+          - unique
+          - not_null
+      - name: category
+        tests:
+          - accepted_values:
+              values: ['electronics', 'home']

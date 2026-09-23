@@ -29,3 +29,31 @@ models:
         tests:
           - unique
           - not_null
+
+  - name: stg_products
+    description: "Verdieping: one row per product, cleaned: name trimmed, category lowercased."
+    columns:
+      - name: product_id
+        description: Primary key of the product.
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_order_items
+    description: "Verdieping: one row per order line item."
+    columns:
+      - name: order_item_id
+        description: Primary key of the order line item.
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        tests:
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
