@@ -10,3 +10,4 @@ FROM {{ ref('stg_orders') }} o
 LEFT JOIN {{ ref('stg_order_items') }} i
     ON o.order_id = i.order_id
 WHERE o.order_status <> 'cancelled'
+AND i.order_id IS NULL

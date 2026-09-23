@@ -2,6 +2,10 @@ name: 'ssc_ict_dbt'
 version: '1.0.0'
 config-version: 2
 
+data_tests:
+  +store_failures: true  
+  severity: warn
+
 profile: 'training'
 
 model-paths: ["models"]
