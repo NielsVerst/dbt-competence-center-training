@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: "One row per order, cleaned: status lowercased, amount cast to numeric(10,2)."
+    columns:
+      - name: order_id
+        description: Primary key of the order.
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: Foreign key to stg_customers.
+        tests:
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: order_status
+        description: Order status, lowercased (e.g. 'shipped', 'open', 'cancelled').
+        tests:
+          - accepted_values:
+              values: ['open', 'shipped', 'cancelled']
+
+  - name: stg_customers
+    description: "One row per customer, cleaned: name trimmed, country uppercased into country_code."
+    columns:
+      - name: customer_id
+        description: Primary key of the customer.
+        tests:
+          - unique
+          - not_null
