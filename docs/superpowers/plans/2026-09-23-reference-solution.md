@@ -565,7 +565,7 @@ version: 2
 
 models:
   - name: stg_orders
-    description: One row per order, cleaned: status lowercased, amount cast to numeric(10,2).
+    description: "One row per order, cleaned: status lowercased, amount cast to numeric(10,2)."
     columns:
       - name: order_id
         description: Primary key of the order.
@@ -585,7 +585,7 @@ models:
               values: ['open', 'shipped', 'cancelled']
 
   - name: stg_customers
-    description: One row per customer, cleaned: name trimmed, country uppercased into country_code.
+    description: "One row per customer, cleaned: name trimmed, country uppercased into country_code."
     columns:
       - name: customer_id
         description: Primary key of the customer.
