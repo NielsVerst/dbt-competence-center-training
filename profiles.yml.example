@@ -1,0 +1,16 @@
+# Copy this to ~/.dbt/profiles.yml (or set DBT_PROFILES_DIR to this folder)
+# and fill in your own Postgres credentials. The real profiles.yml is
+# gitignored — never commit real credentials.
+
+ssc_ict_bi:
+  target: postgres
+  outputs:
+    postgres:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: <your_postgres_user>
+      password: <your_postgres_password>
+      dbname: <your_database>
+      schema: dbt_reference_solution
+      threads: 4

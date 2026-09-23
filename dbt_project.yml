@@ -1,0 +1,17 @@
+name: 'ssc_ict_bi'
+version: '1.0.0'
+config-version: 2
+
+profile: 'ssc_ict_bi'
+
+model-paths: ["models"]
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  ssc_ict_bi:
+    staging:
+      +materialized: view
+    curated:
+      +materialized: table
