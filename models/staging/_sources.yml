@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    description: >
+      Ruwe landingstabellen, ongewijzigd ingeladen zonder transformatie. Alleen-lezen —
+      dbt schrijft hier nooit naar, maar leest alleen via source().
+    tables:
+      - name: orders
+        description: Ruwe orderrecords, één rij per order.
+      - name: customers
+        description: Ruwe klantrecords, één rij per klant.
+      - name: products
+        description: "Verdieping: ruwe productcatalogus, één rij per product."
+      - name: order_items
+        description: "Verdieping: ruwe orderregels, één rij per regel."

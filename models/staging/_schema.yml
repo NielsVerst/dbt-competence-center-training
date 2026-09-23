@@ -2,48 +2,48 @@ version: 2
 
 models:
   - name: stg_orders
-    description: "One row per order, cleaned: status lowercased, amount cast to numeric(10,2)."
+    description: "Eén rij per order, opgeschoond: status in kleine letters, bedrag gecast naar numeric(10,2)."
     columns:
       - name: order_id
-        description: Primary key of the order.
+        description: Primaire sleutel van de order.
         tests:
           - unique
           - not_null
       - name: order_status
-        description: Order status, lowercased (e.g. 'shipped', 'open', 'cancelled').
+        description: Orderstatus in kleine letters (bijv. 'shipped', 'open', 'cancelled').
         tests:
           - accepted_values:
               values: ['open', 'shipped', 'cancelled']
       - name: customer_id
-        description: Foreign key to stg_customers.
+        description: Vreemde sleutel naar stg_customers.
         tests:
           - relationships:
               to: ref('stg_customers')
               field: customer_id
 
   - name: stg_customers
-    description: "One row per customer, cleaned: name trimmed, country uppercased into country_code."
+    description: "Eén rij per klant, opgeschoond: naam getrimd, land in hoofdletters als country_code."
     columns:
       - name: customer_id
-        description: Primary key of the customer.
+        description: Primaire sleutel van de klant.
         tests:
           - unique
           - not_null
 
   - name: stg_products
-    description: "Verdieping: one row per product, cleaned: name trimmed, category lowercased."
+    description: "Verdieping: één rij per product, opgeschoond: naam getrimd, categorie in kleine letters."
     columns:
       - name: product_id
-        description: Primary key of the product.
+        description: Primaire sleutel van het product.
         tests:
           - unique
           - not_null
 
   - name: stg_order_items
-    description: "Verdieping: one row per order line item."
+    description: "Verdieping: één rij per orderregel."
     columns:
       - name: order_item_id
-        description: Primary key of the order line item.
+        description: Primaire sleutel van de orderregel.
         tests:
           - unique
           - not_null

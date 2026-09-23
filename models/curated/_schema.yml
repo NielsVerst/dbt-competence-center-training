@@ -13,14 +13,15 @@ models:
         description: "Som van order_amount over alle orders van de klant."
 
   - name: curated_product_sales
-    description: "Verdieping: one row per product with units sold and total revenue."
+    description: "Verdieping: één rij per product met het aantal verkochte units en totale inkomsten."
     columns:
       - name: product_id
-        description: Primary key of the product.
+        description: "Unieke identifier van het product."
         tests:
           - unique
           - not_null
       - name: category
+        description: "Categorie van het product."
         tests:
           - accepted_values:
               values: ['electronics', 'home']
