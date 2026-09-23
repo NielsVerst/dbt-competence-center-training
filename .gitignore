@@ -29,3 +29,4 @@ env/
 # Claude Code scratch workspaces
 .claude/worktrees/
 .superpowers/
+dbt_internal_packages/
