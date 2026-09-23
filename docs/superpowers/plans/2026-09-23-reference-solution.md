@@ -74,9 +74,9 @@ Expected: prints `READY` within ~30s.
 - [ ] **Step 3: Create a Python venv and install dbt-core + dbt-postgres**
 
 ```bash
-python -m venv .superpowers/sdd/2026-09-23-reference-solution/verify_venv
-.superpowers/sdd/2026-09-23-reference-solution/verify_venv/Scripts/python -m pip install --quiet dbt-core dbt-postgres
-.superpowers/sdd/2026-09-23-reference-solution/verify_venv/Scripts/dbt --version
+python -m venv C:/dbt_verify/venv
+C:/dbt_verify/venv/Scripts/python -m pip install --quiet dbt-core dbt-postgres
+C:/dbt_verify/venv/Scripts/dbt --version
 ```
 
 Expected: prints installed dbt-core/dbt-postgres versions, no errors.
@@ -443,8 +443,8 @@ sources:
 - [ ] **Step 2: Set up a real profiles dir for the venv and run `dbt debug`**
 
 ```bash
-mkdir -p .superpowers/sdd/2026-09-23-reference-solution/dbt_profiles
-cat > .superpowers/sdd/2026-09-23-reference-solution/dbt_profiles/profiles.yml <<'EOF'
+mkdir -p C:/dbt_verify/profiles
+cat > C:/dbt_verify/profiles/profiles.yml <<'EOF'
 ssc_ict_bi:
   target: postgres
   outputs:
@@ -458,7 +458,7 @@ ssc_ict_bi:
       schema: dbt_reference_solution
       threads: 4
 EOF
-DBT_PROFILES_DIR=.superpowers/sdd/2026-09-23-reference-solution/dbt_profiles .superpowers/sdd/2026-09-23-reference-solution/verify_venv/Scripts/dbt debug --project-dir reference-solution
+DBT_PROFILES_DIR=C:/dbt_verify/profiles C:/dbt_verify/venv/Scripts/dbt debug --project-dir reference-solution
 ```
 
 (This verification copy points at the Docker container from Task 1, which maps container port 5432 to host port 55432 — it is deliberately different from `profiles.yml.example`'s shipped `port: 5432`, which targets a trainee's own local Postgres.)
@@ -468,7 +468,7 @@ Expected: `All checks passed!`
 - [ ] **Step 3: Confirm the sources are visible**
 
 ```bash
-DBT_PROFILES_DIR=.superpowers/sdd/2026-09-23-reference-solution/dbt_profiles .superpowers/sdd/2026-09-23-reference-solution/verify_venv/Scripts/dbt show --inline "select * from {{ source('raw', 'customers') }} limit 5" --profiles-dir .superpowers/sdd/2026-09-23-reference-solution/dbt_profiles --project-dir reference-solution
+DBT_PROFILES_DIR=C:/dbt_verify/profiles C:/dbt_verify/venv/Scripts/dbt show --inline "select * from {{ source('raw', 'customers') }} limit 5" --profiles-dir C:/dbt_verify/profiles --project-dir reference-solution
 ```
 
 Expected: 5 rows of customer data printed, no errors.
@@ -525,7 +525,7 @@ from source
 - [ ] **Step 3: Run both models and inspect output**
 
 ```bash
-DBT_PROFILES_DIR=.superpowers/sdd/2026-09-23-reference-solution/dbt_profiles .superpowers/sdd/2026-09-23-reference-solution/verify_venv/Scripts/dbt run --select staging --profiles-dir .superpowers/sdd/2026-09-23-reference-solution/dbt_profiles --project-dir reference-solution
+DBT_PROFILES_DIR=C:/dbt_verify/profiles C:/dbt_verify/venv/Scripts/dbt run --select staging --profiles-dir C:/dbt_verify/profiles --project-dir reference-solution
 ```
 
 Expected: `Completed successfully`, 2 views created (`stg_orders`, `stg_customers` — note: `stg_products`/`stg_order_items` don't exist yet, that's fine, `--select staging` only runs what's there).
@@ -593,7 +593,7 @@ models:
 - [ ] **Step 2: Run tests**
 
 ```bash
-DBT_PROFILES_DIR=.superpowers/sdd/2026-09-23-reference-solution/dbt_profiles .superpowers/sdd/2026-09-23-reference-solution/verify_venv/Scripts/dbt test --select staging --profiles-dir .superpowers/sdd/2026-09-23-reference-solution/dbt_profiles --project-dir reference-solution
+DBT_PROFILES_DIR=C:/dbt_verify/profiles C:/dbt_verify/venv/Scripts/dbt test --select staging --profiles-dir C:/dbt_verify/profiles --project-dir reference-solution
 ```
 
 Expected: all tests `PASS`. If `accepted_values` on `order_status` fails, check Task 3's status cycling — it must only produce values that lowercase to `open`/`shipped`/`cancelled`.
@@ -640,7 +640,7 @@ group by 1, 2
 - [ ] **Step 2: Run it and spot-check aggregates**
 
 ```bash
-DBT_PROFILES_DIR=.superpowers/sdd/2026-09-23-reference-solution/dbt_profiles .superpowers/sdd/2026-09-23-reference-solution/verify_venv/Scripts/dbt run --select curated_customer_orders --profiles-dir .superpowers/sdd/2026-09-23-reference-solution/dbt_profiles --project-dir reference-solution
+DBT_PROFILES_DIR=C:/dbt_verify/profiles C:/dbt_verify/venv/Scripts/dbt run --select curated_customer_orders --profiles-dir C:/dbt_verify/profiles --project-dir reference-solution
 ```
 
 Expected: `Completed successfully`, table `curated_customer_orders` created.
@@ -712,7 +712,7 @@ from source
 - [ ] **Step 3: Run and inspect**
 
 ```bash
-DBT_PROFILES_DIR=.superpowers/sdd/2026-09-23-reference-solution/dbt_profiles .superpowers/sdd/2026-09-23-reference-solution/verify_venv/Scripts/dbt run --select stg_products stg_order_items --profiles-dir .superpowers/sdd/2026-09-23-reference-solution/dbt_profiles --project-dir reference-solution
+DBT_PROFILES_DIR=C:/dbt_verify/profiles C:/dbt_verify/venv/Scripts/dbt run --select stg_products stg_order_items --profiles-dir C:/dbt_verify/profiles --project-dir reference-solution
 docker exec dbt_training_verify psql -U training -d training -c "SELECT DISTINCT category FROM dbt_reference_solution.stg_products ORDER BY 1;"
 ```
 
@@ -762,7 +762,7 @@ group by 1, 2, 3
 - [ ] **Step 2: Run it and spot-check**
 
 ```bash
-DBT_PROFILES_DIR=.superpowers/sdd/2026-09-23-reference-solution/dbt_profiles .superpowers/sdd/2026-09-23-reference-solution/verify_venv/Scripts/dbt run --select curated_product_sales --profiles-dir .superpowers/sdd/2026-09-23-reference-solution/dbt_profiles --project-dir reference-solution
+DBT_PROFILES_DIR=C:/dbt_verify/profiles C:/dbt_verify/venv/Scripts/dbt run --select curated_product_sales --profiles-dir C:/dbt_verify/profiles --project-dir reference-solution
 docker exec dbt_training_verify psql -U training -d training -c "SELECT * FROM dbt_reference_solution.curated_product_sales ORDER BY product_id LIMIT 5;"
 ```
 
@@ -854,7 +854,7 @@ This extends Task 8's file — append to `reference-solution/models/staging/sche
 - [ ] **Step 3: Run full build and confirm all tests pass**
 
 ```bash
-DBT_PROFILES_DIR=.superpowers/sdd/2026-09-23-reference-solution/dbt_profiles .superpowers/sdd/2026-09-23-reference-solution/verify_venv/Scripts/dbt build --profiles-dir .superpowers/sdd/2026-09-23-reference-solution/dbt_profiles --project-dir reference-solution
+DBT_PROFILES_DIR=C:/dbt_verify/profiles C:/dbt_verify/venv/Scripts/dbt build --profiles-dir C:/dbt_verify/profiles --project-dir reference-solution
 ```
 
 Expected: all models build, all tests `PASS`, `Completed successfully`. This is the full end-to-end verification of the whole project.
@@ -876,7 +876,7 @@ git commit -m "Add tests and descriptions for bonus models"
 - [ ] **Step 1: Generate docs and confirm the site builds**
 
 ```bash
-DBT_PROFILES_DIR=.superpowers/sdd/2026-09-23-reference-solution/dbt_profiles .superpowers/sdd/2026-09-23-reference-solution/verify_venv/Scripts/dbt docs generate --profiles-dir .superpowers/sdd/2026-09-23-reference-solution/dbt_profiles --project-dir reference-solution
+DBT_PROFILES_DIR=C:/dbt_verify/profiles C:/dbt_verify/venv/Scripts/dbt docs generate --profiles-dir C:/dbt_verify/profiles --project-dir reference-solution
 ```
 
 Expected: `Completed successfully`, `reference-solution/target/catalog.json` and `reference-solution/target/manifest.json` are created (don't commit these — they're covered by the existing `target/` gitignore rule).
@@ -973,8 +973,8 @@ git commit -m "Document repo layout in top-level README"
 docker exec dbt_training_verify psql -U training -d training -c "DROP SCHEMA IF EXISTS raw CASCADE; DROP SCHEMA IF EXISTS dbt_reference_solution CASCADE;"
 docker exec -i dbt_training_verify psql -U training -d training < sql/01_create_schema_and_tables.sql
 docker exec -i dbt_training_verify psql -U training -d training < sql/02_populate_raw_data.sql
-DBT_PROFILES_DIR=.superpowers/sdd/2026-09-23-reference-solution/dbt_profiles .superpowers/sdd/2026-09-23-reference-solution/verify_venv/Scripts/dbt build --profiles-dir .superpowers/sdd/2026-09-23-reference-solution/dbt_profiles --project-dir reference-solution
-DBT_PROFILES_DIR=.superpowers/sdd/2026-09-23-reference-solution/dbt_profiles .superpowers/sdd/2026-09-23-reference-solution/verify_venv/Scripts/dbt docs generate --profiles-dir .superpowers/sdd/2026-09-23-reference-solution/dbt_profiles --project-dir reference-solution
+DBT_PROFILES_DIR=C:/dbt_verify/profiles C:/dbt_verify/venv/Scripts/dbt build --profiles-dir C:/dbt_verify/profiles --project-dir reference-solution
+DBT_PROFILES_DIR=C:/dbt_verify/profiles C:/dbt_verify/venv/Scripts/dbt docs generate --profiles-dir C:/dbt_verify/profiles --project-dir reference-solution
 ```
 
 Expected: everything succeeds with no manual fixes needed, `dbt build` shows 6 models built and all tests passed (`stg_orders`, `stg_customers`, `stg_products`, `stg_order_items`, `curated_customer_orders`, `curated_product_sales`).
@@ -983,7 +983,7 @@ Expected: everything succeeds with no manual fixes needed, `dbt build` shows 6 m
 
 ```bash
 docker rm -f dbt_training_verify
-rm -rf .superpowers/sdd/2026-09-23-reference-solution/verify_venv .superpowers/sdd/2026-09-23-reference-solution/dbt_profiles
+rm -rf C:/dbt_verify/venv C:/dbt_verify/profiles
 ```
 
 - [ ] **Step 3: Confirm git status is clean (only intended files tracked, target/ etc. ignored)**
