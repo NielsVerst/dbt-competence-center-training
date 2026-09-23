@@ -13,13 +13,15 @@ models:
         description: Orderstatus in kleine letters (bijv. 'shipped', 'open', 'cancelled').
         tests:
           - accepted_values:
-              values: ['open', 'shipped', 'cancelled']
+              arguments:
+                values: ['open', 'shipped', 'cancelled']
       - name: customer_id
         description: Vreemde sleutel naar stg_customers.
         tests:
           - relationships:
-              to: ref('stg_customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
 
   - name: stg_customers
     description: "Eén rij per klant, opgeschoond: naam getrimd, land in hoofdletters als country_code."
@@ -50,10 +52,12 @@ models:
       - name: order_id
         tests:
           - relationships:
-              to: ref('stg_orders')
-              field: order_id
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
       - name: product_id
         tests:
           - relationships:
-              to: ref('stg_products')
-              field: product_id
+              arguments:
+                to: ref('stg_products')
+                field: product_id

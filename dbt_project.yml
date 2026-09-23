@@ -1,8 +1,8 @@
-name: 'ssc_ict_bi'
+name: 'ssc_ict_dbt'
 version: '1.0.0'
 config-version: 2
 
-profile: 'ssc_ict_bi'
+profile: 'training'
 
 model-paths: ["models"]
 clean-targets:
@@ -10,7 +10,7 @@ clean-targets:
   - "dbt_packages"
 
 models:
-  ssc_ict_bi:
+  ssc_ict_dbt:
     staging:
       +materialized: view
     curated:

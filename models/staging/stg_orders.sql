@@ -1,3 +1,5 @@
+{{ staging_config() }}
+
 with source as (
     select * from {{ source('raw', 'orders') }}
 )

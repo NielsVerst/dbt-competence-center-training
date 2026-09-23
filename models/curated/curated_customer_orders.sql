@@ -1,3 +1,5 @@
+{{ curated_config() }}
+
 with orders as (
     select * from {{ ref('stg_orders') }}
 ),

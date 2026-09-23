@@ -1,3 +1,5 @@
+{{ staging_config() }}
+
 -- Verdieping / bonus: not part of the core Day 1 exercise.
 with source as (
     select * from {{ source('raw', 'products') }}

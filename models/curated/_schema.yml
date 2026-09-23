@@ -24,4 +24,5 @@ models:
         description: "Categorie van het product."
         tests:
           - accepted_values:
-              values: ['electronics', 'home']
+              arguments:
+                values: ['electronics', 'home']

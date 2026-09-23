@@ -1,3 +1,5 @@
+{{ curated_config() }}
+
 -- Verdieping / bonus: not part of the core Day 1 exercise.
 with items as (
     select * from {{ ref('stg_order_items') }}
