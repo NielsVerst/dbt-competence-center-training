@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    description: >
+      Raw landing tables, loaded as-is with no transformation. Read-only —
+      dbt never writes here, only reads via source().
+    tables:
+      - name: orders
+        description: Raw order records, one row per order.
+      - name: customers
+        description: Raw customer records, one row per customer.
+      - name: products
+        description: "Verdieping: raw product catalog, one row per product."
+      - name: order_items
+        description: "Verdieping: raw order line items, one row per item."
