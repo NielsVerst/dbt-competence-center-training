@@ -468,8 +468,10 @@ Expected: `All checks passed!`
 - [ ] **Step 3: Confirm the sources are visible**
 
 ```bash
-DBT_PROFILES_DIR=C:/dbt_verify/profiles C:/dbt_verify/venv/Scripts/dbt show --inline "select * from {{ source('raw', 'customers') }} limit 5" --profiles-dir C:/dbt_verify/profiles --project-dir reference-solution
+DBT_PROFILES_DIR=C:/dbt_verify/profiles C:/dbt_verify/venv/Scripts/dbt show --inline "select * from {{ source('raw', 'customers') }}" --profiles-dir C:/dbt_verify/profiles --project-dir reference-solution
 ```
+
+(No trailing `limit 5` in the inline query — `dbt show` already applies its own `--limit 5` default, and combining both produces two back-to-back `LIMIT` clauses, which Postgres rejects as a syntax error.)
 
 Expected: 5 rows of customer data printed, no errors.
 
